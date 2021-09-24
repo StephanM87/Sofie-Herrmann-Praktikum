@@ -9,24 +9,28 @@ class GleesDocument(Document):
         doc = Document(page_numbers=True, geometry_options=geometry_options)
 
         fmt = "X[r] X[r] X[r]"
-        with doc.create(LongTable(fmt)) as glees_table:
-                glees_table.add_hline()
-                glees_table.add_row(["Nummer", "Grund", "asdf"])
-                glees_table.add_hline()
-                glees_table.end_table_header()
-                glees_table.add_hline()
-                glees_table.add_row((MultiColumn(3, align='r')))
-                glees_table.add_hline()
-                glees_table.end_table_footer()
-                glees_table.add_hline()
-                glees_table.add_row((MultiColumn(3, align='r')))
-                glees_table.add_hline()
-                glees_table.end_table_last_footer()
-                row = ["text1", "text2", "text3"]
-                for i in range(10):
-                    glees_table.add_row(row)
+        with doc.create(LongTable(fmt)) as data_table:
+                data_table.add_hline()
+                data_table.add_row(["Nummer", "Grund", "asdf"])
+                data_table.add_hline()
+                data_table.end_table_header()
+                data_table.add_hline()
+                data_table.add_row((MultiColumn(3, align='r',
+                                    data='Continued on Next Page'),))
+                data_table.add_hline()
+                data_table.end_table_footer()
+                data_table.add_hline()
+                data_table.add_row((MultiColumn(3, align='r',
+                                    data='Not Continued on Next Page'),))
+                data_table.add_hline()
+                data_table.end_table_last_footer()
+                row = ["Sophie", "Glees", "Bouldern"]
+                for i in range(15):
+                    data_table.add_row(row)
+        doc.generate_pdf("gleesiglees",compiler="pdflatex", clean_tex=False)
 
-if __name__ == "__main__":
-    doc = GleesDocument()
-    doc.table()
-    doc.generate_pdf("Glees_ist_geil", clean_tex=False)
+#if __name__ == "__main__":
+doc = GleesDocument()
+doc.table()
+#doc.generate_pdf("gleesiglees",compiler="pdflatex", clean_tex=False)
+print("guten Morgen")

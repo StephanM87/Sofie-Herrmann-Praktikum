@@ -1,5 +1,2 @@
-# Sofie-Herrmann-Praktikum
+# Allgemeine Informationen über das Package
 
-## Du lernst voll coole Python sachen und auch wie man mit Python PDFs exportiert und so
-
-Hallo Sofie in diesem Prkatikum....

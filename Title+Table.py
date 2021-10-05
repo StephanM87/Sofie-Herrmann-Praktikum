@@ -9,6 +9,7 @@ vessel_type = "some vessel"
 volume = int(42)
 vol_unit = "mol/l"
 additional_attributes = ["a","s", "d", "f"]
+add_attributes = [{"Sektor":"Kruzifix"}, {"Bereich":"Eisheiligen"}]
 temp = int(42)
 temp_unit = "°C"
 ph_value = int(7)
@@ -47,6 +48,12 @@ class PdfLibrary (Document):
                       table2.add_hline()
                       table2.add_row(["Unit", vol_unit])
                       table2.add_hline()
+                      for i in add_attributes:
+                          key = list(i.keys())[0]
+                          print(key)
+                          table2.add_row([key, i[key]])
+                          table2.add_hline()
+
                       table2.add_row((MultiRow(2, data = "Others"), additional_attributes[0]))
                       for i in additional_attributes:
                           table2.add_hline(2)

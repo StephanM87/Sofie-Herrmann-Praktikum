@@ -1,5 +1,5 @@
 
-{
+DataModel = {
     "title": "EcPDC_C-HispH6.5",
     "description": "Reaction under argon atmosphere",
     "enzymes": [

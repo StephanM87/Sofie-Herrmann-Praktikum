@@ -2,8 +2,16 @@ import pylatex.config as cf
 from pylatex import Document, Tabular, Section, NoEscape, Command, MultiRow
 from Old.BioCatHubDatenmodell import DataModel
 
-user_dict_keys = ["email", "firstName", "lastName", "institution"]
-
+user_dict_entries = [
+                    {"key":"email",
+                    "label":"E-Mail"},
+                    {"key":"firstName",
+                    "label":"First Name"},
+                    {"key":"lastName",
+                    "label":"Last Name"},
+                    {"key":"institution",
+                    "label":"Institute"}
+                ]
 
 
 class PdfLibrary (Document):
@@ -27,8 +35,8 @@ class PdfLibrary (Document):
         with doc.create(Section("User:")):
             with doc.create(Tabular("|c|c|")) as table:
                 table.add_hline()
-                for i in user_dict_keys:
-                    table.add_row([i, self.biocathub_model["user"][i]])
+                for i in user_dict_entries:
+                    table.add_row([i["label"], self.biocathub_model["user"][i["key"]]])
                     table.add_hline()
 
         with doc.create(Section("Vessel:")):

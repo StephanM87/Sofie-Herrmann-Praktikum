@@ -1,6 +1,6 @@
 from pylatex import Document, Tabular, Section, NoEscape, Command, MultiRow
+from Old.BioCatHubDatenmodell import DataModel
 
-title_name = "Super cooler Titel"
 first_name = "some firstname"
 last_name = "some lastname"
 e_mail = "some@adress.com"
@@ -8,16 +8,18 @@ institution = "some institution"
 vessel_type = "some vessel"
 volume = int(42)
 vol_unit = "mol/l"
-additional_attributes = ["a", "s", "d", "f"]
 add_attributes = [{"Sektor": "Kruzifix"}, {"Bereich": "Eisheiligen"}]
 temp = int(42)
 temp_unit = "°C"
 ph_value = int(7)
 buffer = "some buffer"
-additional_attributes2 = ["a", "b", "c"]
 
 
 class PdfLibrary (Document):
+
+    def __init__(self, data_model):
+        self.biocathub_model = data_model
+
     def create_pdf(self):
         geometry_options = {
             "margin": "2cm",
@@ -25,7 +27,7 @@ class PdfLibrary (Document):
         }
         doc = Document(page_numbers=True, geometry_options=geometry_options)
 
-        doc.preamble.append(Command("title", title_name))
+        doc.preamble.append(Command("title", self.biocathub_model["title"]))
         doc.append(NoEscape(r"\maketitle"))
 
         with doc.create(Section("User:")):
@@ -41,25 +43,10 @@ class PdfLibrary (Document):
                 table.add_hline()
         with doc.create(Section("Vessel:")):
             with doc.create(Tabular("|c|c|")) as table2:
-                table2.add_hline()
-                table2.add_row(["Type", vessel_type])
-                table2.add_hline()
-                table2.add_row(["Volume", volume])
-                table2.add_hline()
-                table2.add_row(["Unit", vol_unit])
-                table2.add_hline()
-                for i in add_attributes:
-                    key = list(i.keys())[0]
-                    print(key)
+                for i in DataModel["vessel"]:
+                    key = list(i.keys())
                     table2.add_row([key, i[key]])
                     table2.add_hline()
-
-                table2.add_row((MultiRow(2, data="Others"),
-                            additional_attributes[0]))
-                for i in additional_attributes:
-                    table2.add_hline(2)
-                    table2.add_row("", i)
-                table2.add_hline()
         with doc.create(Section("Condition:")):
             with doc.create(Tabular("|c|c|")) as table3:
                 table3.add_hline()
@@ -71,16 +58,14 @@ class PdfLibrary (Document):
                 table3.add_hline()
                 table3.add_row(["Buffer", buffer])
                 table3.add_hline()
-                table3.add_row((MultiRow(2, data="Others"),
-                               additional_attributes2[0]))
-                for i in additional_attributes2:
-                    table3.add_hline(2)
-                    table3.add_row("", additional_attributes2[0])
-                table3.add_hline()
+                for i in add_attributes:
+                    key = list(i.keys())[0]
+                    table3.add_row([key, i[key]])
+                    table3.add_hline()
 
-        doc.generate_pdf("Gesamt Versuch5",
+        doc.generate_pdf("Gesamt_Test",
                          compiler="pdflatex", clean_tex=False)
 
 
-doc = PdfLibrary()
+doc = PdfLibrary(DataModel)
 doc.create_pdf()

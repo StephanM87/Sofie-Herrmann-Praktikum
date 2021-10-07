@@ -1,3 +1,4 @@
+import pylatex.config as cf
 from pylatex import Document, Tabular, Section, NoEscape, Command, MultiRow
 from Old.BioCatHubDatenmodell import DataModel
 
@@ -9,12 +10,15 @@ class PdfLibrary (Document):
     def create_pdf(self):
         geometry_options = {
             "margin": "2.54cm",
-            "includeheadfoot": True
         }
         doc = Document(page_numbers=True, geometry_options=geometry_options)
 
         doc.preamble.append(Command("title", self.biocathub_model["title"]))
         doc.append(NoEscape(r"\maketitle"))
+
+        with doc.create(Section("Description")):
+            cf.active = cf.Version1()
+            doc.append(self.biocathub_model["description"])
 
         with doc.create(Section("User:")):
             with doc.create(Tabular("|c|c|")) as table:
@@ -59,8 +63,27 @@ class PdfLibrary (Document):
                     key = list(i.keys())[0]
                     table3.add_row([key, i[key]])
                     table3.add_hline()
+        
+        with doc.create(Section("Enzymes")):
+            with doc.create(Tabular("|c|c|")) as table4:
+                '''table4.add_hline()
+                table4.add_row(["Concentration", self.biocathub_model["enzymes"]])
+                table4.add_hline()
+                table4.add_row(["ecNumber", self.biocathub_model["enzymes"]["ecNumber"]])
+                table4.add_hline()
+                table4.add_row(["Formulation", self.biocathub_model["enzymes"]["formulation"]])
+                table4.add_hline()
+                table4.add_row(["Method", self.biocathub_model["enzymes"]["method"]])
+                table4.add_hline()
+                table4.add_row(["Name", self.biocathub_model["enzymes"]["name"]])
+                table4.add_hline()
+                table4.add_row(["Organism", self.biocathub_model["enzymes"]["organism"]])'''
+                for i in self.biocathub_model["enzymes"]:
+                    key = list(i.keys())[0]
+                    table4.add_row([key, i[key]])
+                    table4.add_hline()
 
-        doc.generate_pdf("biocathub_pdf_test",
+        doc.generate_pdf("biocathub_pdf_test2",
                          compiler="pdflatex", clean_tex=False)
 
 

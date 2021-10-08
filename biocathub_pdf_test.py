@@ -12,6 +12,78 @@ user_dict_entries = [
                     {"key":"institution",
                     "label":"Institute"}
                 ]
+vessel_dict_entries = [
+                      {"key":"type",
+                      "label":"Vesseltype"},
+                      {"key":"unit",
+                      "label":"Unit"},
+                      {"key":"volume",
+                      "label":"Volume"},
+                      {"key":"others",
+                      "label":"Additional"}
+
+                ]
+
+condition_dict_entries = [
+                      {"key":"ph",
+                      "label":"pH"},
+                      {"key":"temp",
+                      "label":"Temperature"},
+                      {"key":"unit",
+                      "label":"Unit"},
+                      {"key":"buffer",
+                      "label":"Buffer"},
+                      {"key": "others",
+                      "label":"Additional"}
+
+                ]
+
+buffer_dict_entries = [
+                      {"key":"concentration",
+                      "label":"Concentration"},
+                      {"key":"type",
+                      "label":"Buffertype"},
+                      {"key":"unit",
+                      "label":"Unit"}
+
+                ]
+
+enzymes_dict_entries = [
+                      {"key":"concentration",
+                      "label":"Concentration"},
+                      {"key":"ecNumber",
+                      "label":"ecNumber"},
+                      {"key":"formulation",
+                      "label":"Formulation"},
+                      {"key":"method",
+                      "label":"Method"},
+                      {"key":"name",
+                      "label":"Name"},
+                      {"key":"organism",
+                      "label":"Organism"},
+                      {"key":"sequence",
+                      "label":"Sequence"},
+                      {"key":"type",
+                      "label":"Type"},
+                      {"key":"unit",
+                      "label":"Unit"},
+                      {"key":"variant",
+                      "label":"Variant"}
+
+
+                ]
+
+measurements_dict_entries = [
+                      {"key":"notes",
+                      "label":"Notes"},
+                      {"key":"plotStyle",
+                      "label":"Plot Style"},
+                      {"key":"reagent",
+                      "label":"Reagent"},
+                      {"key":"replicates",
+                      "label":"Replicates"}
+
+                ]
 
 
 class PdfLibrary (Document):
@@ -42,54 +114,33 @@ class PdfLibrary (Document):
         with doc.create(Section("Vessel:")):
             with doc.create(Tabular("|c|c|")) as table2:
                 table2.add_hline()
-                table2.add_row(["Type", self.biocathub_model["vessel"]["type"]])
-                table2.add_hline()
-                table2.add_row(["Unit", self.biocathub_model["vessel"]["unit"]])
-                table2.add_hline()
-                table2.add_row(["Volume", self.biocathub_model["vessel"]["volume"]])
-                table2.add_hline()
-                for i in self.biocathub_model["vessel"]["others"]:
-                    key = list(i.keys())[0]
-                    table2.add_row([key, i[key]])
+                for i in vessel_dict_entries:
+                    table2.add_row([i["label"], self.biocathub_model["vessel"][i["key"]]])
                     table2.add_hline()
+
         with doc.create(Section("Condition:")):
             with doc.create(Tabular("|c|c|")) as table3:
                 table3.add_hline()
-                table3.add_row(["Temperature", self.biocathub_model["condition"]["temp"]])
-                table3.add_hline()
-                table3.add_row(["Unit", self.biocathub_model["condition"]["unit"]])
-                table3.add_hline()
-                table3.add_row(["pH", self.biocathub_model["condition"]["ph"]])
-                table3.add_hline()
-                table3.add_row(["Buffer Concentration", self.biocathub_model["condition"]["buffer"]["concentration"]])
-                table3.add_hline()
-                table3.add_row(["Buffer Type", self.biocathub_model["condition"]["buffer"]["type"]])
-                table3.add_hline()
-                table3.add_row(["Buffer Unit", self.biocathub_model["condition"]["buffer"]["unit"]])
-                table3.add_hline()
-                for i in self.biocathub_model["condition"]["others"]:
-                    key = list(i.keys())[0]
-                    table3.add_row([key, i[key]])
+                for i in condition_dict_entries:
+                    table3.add_row([i["label"], self.biocathub_model["condition"][i["key"]]])
+                    table3.add_hline()
+                for j in buffer_dict_entries:
+                    table3.add_row([j["label"], self.biocathub_model["condition"]["buffer"][j["key"]]])
                     table3.add_hline()
         
-        with doc.create(Section("Enzymes")):
+        '''with doc.create(Section("Enzymes")):
             with doc.create(Tabular("|c|c|")) as table4:
-                '''table4.add_hline()
-                table4.add_row(["Concentration", self.biocathub_model["enzymes"]])
                 table4.add_hline()
-                table4.add_row(["ecNumber", self.biocathub_model["enzymes"]["ecNumber"]])
-                table4.add_hline()
-                table4.add_row(["Formulation", self.biocathub_model["enzymes"]["formulation"]])
-                table4.add_hline()
-                table4.add_row(["Method", self.biocathub_model["enzymes"]["method"]])
-                table4.add_hline()
-                table4.add_row(["Name", self.biocathub_model["enzymes"]["name"]])
-                table4.add_hline()
-                table4.add_row(["Organism", self.biocathub_model["enzymes"]["organism"]])'''
-                for i in self.biocathub_model["enzymes"]:
-                    key = list(i.keys())[0]
-                    table4.add_row([key, i[key]])
-                    table4.add_hline()
+                for i in enzymes_dict_entries:
+                    table4.add_row([i["label"], self.biocathub_model["enzymes"][i["key"]]])
+                    table4.add_hline()'''
+        
+        ''''with doc.create(Section("Experimental Data:")):
+            with doc.create(Tabular("|c|c|")) as table5:
+                table5.add_hline()
+                for i in measurements_dict_entries:
+                    table5.add_row([i["label"], self.biocathub_model["experimentalData"]["measurements"][i["key"]]])
+                    table5.add_hline()'''
 
         doc.generate_pdf("biocathub_pdf_test2",
                          compiler="pdflatex", clean_tex=False)

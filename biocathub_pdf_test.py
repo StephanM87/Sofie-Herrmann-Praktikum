@@ -82,7 +82,6 @@ measurements_dict_entries = [
                       "label":"Reagent"},
                       {"key":"replicates",
                       "label":"Replicates"}
-
                 ]
 
 

@@ -1,66 +1,7 @@
 import pylatex.config as cf
 from pylatex import Document, Tabular, Section, Subsection, NoEscape, Command
 from BioCatHubDatenmodell import DataModel
-
-user_dict_entries = [
-                    {"key":"email",
-                    "label":"E-Mail"},
-                    {"key":"firstName",
-                    "label":"First Name"},
-                    {"key":"lastName",
-                    "label":"Last Name"},
-                    {"key":"institution",
-                    "label":"Institute"}
-                ]
-vessel_dict_entries = [
-                      {"key":"type",
-                      "label":"Vesseltype"},
-                      {"key":"unit",
-                      "label":"Unit"},
-                      {"key":"volume",
-                      "label":"Volume"},
-                      {"key":"others",
-                      "label":"Additional"}
-
-                ]
-
-condition_dict_entries = [
-                      {"key":"ph",
-                      "label":"pH"},
-                      {"key":"temp",
-                      "label":"Temperature"},
-                      {"key":"unit",
-                      "label":"Unit"},
-                      {"key": "others",
-                      "label":"Additional"}
-
-                ]
-
-buffer_dict_entries = [
-                      {"key":"concentration",
-                      "label":"Concentration"},
-                      {"key":"type",
-                      "label":"Buffertype"},
-                      {"key":"unit",
-                      "label":"Unit"}
-
-                ]
-
-enzymes_dict_entries = [
-                      {"key":"concentration",
-                      "label":"Concentration"},
-                      {"key":"ecNumber",
-                      "label":"ecNumber"},
-                      {"key":"formulation",
-                      "label":"Formulation"},
-                      {"key":"method",
-                      "label":"Method"},
-                      {"key":"name",
-                      "label":"Name"},
-                      {"key":"organism",
-                      "label":"Organism"},
-
-                ]
+from dict_entries import user_dict_entries, vessel_dict_entries, condition_dict_entries, buffer_dict_entries, enzymes_dict_entries
 
 
 class PdfLibrary (Document):
@@ -83,49 +24,62 @@ class PdfLibrary (Document):
 
         with doc.create(Section("User:")):
             with doc.create(Tabular("|c|c|")) as table:
+                user = self.biocathub_model["user"]
                 table.add_hline()
                 for i in user_dict_entries:
-                    table.add_row([i["label"], self.biocathub_model["user"][i["key"]]])
+                    table.add_row([i["label"], user[i["key"]]])
                     table.add_hline()
 
         with doc.create(Section("Vessel:")):
             with doc.create(Tabular("|c|c|")) as table2:
+                vessel = self.biocathub_model["vessel"]
                 table2.add_hline()
                 for i in vessel_dict_entries:
-                    table2.add_row([i["label"], self.biocathub_model["vessel"][i["key"]]])
+                    table2.add_row([i["label"], vessel[i["key"]]])
                     table2.add_hline()
+                def add_others(dict):
+                    for i in dict:
+                        table2.add_row(["Others", [dict[i]]])
+                        table2.add_hline()
+
+                for i in vessel["others"]:
+                    add_others(i)
 
         with doc.create(Section("Condition:")):
             with doc.create(Tabular("|c|c|")) as table3:
+                condition = self.biocathub_model["condition"]
                 table3.add_hline()
                 for i in condition_dict_entries:
-                    table3.add_row([i["label"], self.biocathub_model["condition"][i["key"]]])
+                    table3.add_row([i["label"], condition[i["key"]]])
                     table3.add_hline()
                 def kack_funktion(dict):
-                    print(dict["key"], dict["value"])
+                    for i in dict:
+                        table3.add_row(["Others", dict[i]])
+                        table3.add_hline()
 
-                for i in self.biocathub_model["condition"]["others"]:
+                for i in condition["others"]:
                     kack_funktion(i)
 
         with doc.create(Subsection("Buffer")):
                     with doc.create(Tabular("|c|c|")) as table3_1:
+                        buffer = self.biocathub_model["condition"]["buffer"]
                         table3_1.add_hline()
                         for i in buffer_dict_entries:
-                            table3_1.add_row([i["label"], self.biocathub_model["condition"]["buffer"][i["key"]]])
+                            table3_1.add_row([i["label"], buffer[i["key"]]])
                             table3_1.add_hline()
         
-        '''with doc.create(Section("Enzymes")):
+        with doc.create(Section("Enzymes")):
             with doc.create(Tabular("|c|c|")) as table4:
+                enzymes = self.biocathub_model["enzymes"]
                 table4.add_hline()
-                def ausgabe(dict):
-                    print(dict["concentration"], dict["ecNUmber"])
-                def extract_dict(dict):
-                    enzymes = dict[self.biocathub_model["enzymes"]]
-                    for i in enzymes:
-                        ausgabe(i)
-                for i in self.biocathub_model["enzymes"]:
-                    extract_dict(i)'''
+                def add_stuff(dict):
+                    for i in dict:
+                        table4.add_row([i, dict[i]])
+                        table4.add_hline()
+                        #print(dict[i])
 
+                for i in enzymes:
+                    add_stuff(i)
                 
         doc.generate_pdf("biocathub_pdf_test",
                          compiler="pdflatex", clean_tex=False)

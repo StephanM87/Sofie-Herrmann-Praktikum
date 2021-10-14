@@ -1,7 +1,7 @@
 import pylatex.config as cf
 from pylatex import Document, Tabular, Section, Subsection, NoEscape, Command
 from BioCatHubDatenmodell import DataModel
-from dict_entries import user_dict_entries, vessel_dict_entries, condition_dict_entries, buffer_dict_entries, enzymes_dict_entries
+from dict_entries import user_dict_entries, vessel_dict_entries, condition_dict_entries, buffer_dict_entries, enzymes_dict_entries, educts_dict_entries
 
 
 class PdfLibrary (Document):
@@ -39,7 +39,7 @@ class PdfLibrary (Document):
                     table2.add_hline()
                 def add_others(dict):
                     for i in dict:
-                        table2.add_row(["Others", [dict[i]]])
+                        table2.add_row([i, [dict[i]]])
                         table2.add_hline()
 
                 for i in vessel["others"]:
@@ -54,7 +54,7 @@ class PdfLibrary (Document):
                     table3.add_hline()
                 def kack_funktion(dict):
                     for i in dict:
-                        table3.add_row(["Others", dict[i]])
+                        table3.add_row([i, dict[i]])
                         table3.add_hline()
 
                 for i in condition["others"]:
@@ -72,15 +72,39 @@ class PdfLibrary (Document):
             with doc.create(Tabular("|c|c|")) as table4:
                 enzymes = self.biocathub_model["enzymes"]
                 table4.add_hline()
-                def add_stuff(dict):
+                def kack_funktion2(dict):
                     for i in dict:
                         table4.add_row([i, dict[i]])
                         table4.add_hline()
-                        #print(dict[i])
 
                 for i in enzymes:
-                    add_stuff(i)
-                
+                    kack_funktion2(i)
+        
+        with doc.create(Subsection("Educts")):
+            with doc.create(Tabular("|c|c|")) as table4_1:
+                educts = i["reaction"]["educts"]
+                table4_1.add_hline()
+                def verfickte_drecks_funktion(dict):
+                    for i in dict:
+                        table4_1.add_row([i, dict[i]])
+                        table4_1.add_hline()
+ 
+                for i in educts:
+                    verfickte_drecks_funktion(i)
+
+        '''with doc.create(Subsection("Products")):
+            with doc.create(Tabular("|c|c|")) as table4_2:
+                products = i["reaction"]["products"]
+                table4_2.add_hline()
+                def verfickte_drecks_funktion2(dict):
+                    for i in dict:
+                        table4_1.add_row([i, dict[i]])
+                        table4_1.add_hline()
+                        print(i)
+ 
+                for i in products:
+                    verfickte_drecks_funktion2(i)'''
+
         doc.generate_pdf("biocathub_pdf_test",
                          compiler="pdflatex", clean_tex=False)
 

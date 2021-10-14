@@ -54,3 +54,25 @@ enzymes_dict_entries = [
                       "label":"Organism"},
 
                 ]
+
+educts_dict_entries = [
+                      {"key":"concentration",
+                      "label":"Concentration"},
+                      {"key":"formula",
+                      "label":"Formula"},
+                      {"key":"id",
+                      "label":"ID"},
+                      {"key":"name",
+                      "label":"Name"},
+                      {"key":"purity",
+                      "label":"Purity"},
+                      {"key":"role",
+                      "label":"Role"},
+                      {"key":"smiles",
+                      "label":"smiles"},
+                      {"key":"supplier",
+                      "label":"Supplier"},
+                      {"key":"unit",
+                      "label":"Unit"}
+
+                ]

@@ -5,13 +5,18 @@
 \usepackage{textcomp}%
 \usepackage{lastpage}%
 \usepackage{geometry}%
-\geometry{margin=2.54cm,includeheadfoot=True}%
+\geometry{margin=2.54cm}%
 %
 \title{EcPDC\_C{-}HispH6.5}%
 %
 \begin{document}%
 \normalsize%
 \maketitle%
+\section{Description}%
+\label{sec:Description}%
+Reaction under argon atmosphere
+
+%
 \section{User:}%
 \label{sec:User}%
 \begin{tabular}{|c|c|}%
@@ -22,7 +27,7 @@ First Name&Stephan\\%
 \hline%
 Last Name&Malzacher\\%
 \hline%
-Institution&Forschungszentrum Jülich\\%
+Institute&Forschungszentrum Jülich\\%
 \hline%
 \end{tabular}
 
@@ -31,7 +36,7 @@ Institution&Forschungszentrum Jülich\\%
 \label{sec:Vessel}%
 \begin{tabular}{|c|c|}%
 \hline%
-Type&microcentrifuge tube 1.5 mL polypropylene\\%
+Vesseltype&microcentrifuge tube 1.5 mL polypropylene\\%
 \hline%
 Unit&mL\\%
 \hline%
@@ -44,19 +49,157 @@ Volume&1\\%
 \label{sec:Condition}%
 \begin{tabular}{|c|c|}%
 \hline%
+pH&6.5\\%
+\hline%
 Temperature&30\\%
 \hline%
 Unit&°C\\%
 \hline%
-pH&6.5\\%
-\hline%
-Buffer Concentration&100\\%
-\hline%
-Buffer Type&Kpi{-}buffer\\%
-\hline%
-Buffer Unit&mmoL/L\\%
-\hline%
 key&gas phase\\%
+\hline%
+value&argon\\%
+\hline%
+\end{tabular}
+
+%
+\subsection{Buffer}%
+\label{subsec:Buffer}%
+\begin{tabular}{|c|c|}%
+\hline%
+Concentration&100\\%
+\hline%
+Buffertype&Kpi{-}buffer\\%
+\hline%
+Unit&mmoL/L\\%
+\hline%
+\end{tabular}
+
+%
+\section{Enzymes}%
+\label{sec:Enzymes}%
+\begin{tabular}{|c|c|}%
+\hline%
+concentration&1\\%
+\hline%
+ecNumber&4.1.1.1\\%
+\hline%
+formulation&NiNTA pruified enzyme\\%
+\hline%
+method&Bradford\\%
+\hline%
+name&pyruvate decarboxylase\\%
+\hline%
+organism&E.coli\\%
+\hline%
+others&{[}{]}\\%
+\hline%
+reaction&\{'educts': {[}\{'concentration': '1', 'formula': 'C3H4O3', 'id': '33', 'imageUrl': 'https://www.ebi.ac.uk/chebi/displayImage.do?defaultImage=true\&imageIndex=0\&chebiId=32816', 'name': 'Pyruvate', 'purity': '98\%', 'role': 'substrate', 'smiles': 'CC(=O)C(O)=O', 'supplier': 'sigma{-}aldrich', 'unit': 'mmoL/L'\}{]}, 'products': {[}\{'concentration': '1', 'formula': 'C2H4O', 'id': '1292', 'imageUrl': 'https://www.ebi.ac.uk/chebi/displayImage.do?defaultImage=true\&imageIndex=0\&chebiId=15343', 'name': 'Acetaldehyde', 'purity': '0', 'role': 'product', 'smiles': 'CC=O', 'supplier': '0', 'unit': 'mmoL/L'\}, \{'concentration': '0.5', 'formula': 'CO2', 'id': '1266', 'imageUrl': 'https://www.ebi.ac.uk/chebi/displayImage.do?defaultImage=true\&imageIndex=0\&chebiId=139538', 'name': 'CO2', 'purity': '0', 'role': 'product', 'smiles': 'O=C=O', 'supplier': '0', 'unit': 'mmoL/L'\}{]}, 'value': 'Pyruvate = Acetaldehyde + CO2'\}\\%
+\hline%
+sequence&maatttatsl fssrlhfqnq \newline%
+nqgygfpakt pnslqvnqii \newline%
+dgrkmrnatv lsaastdkai\newline%
+ttaqsvapta cdrvrrhtis \newline%
+vfvgdesgii nriagvfarr \newline%
+gynieslavg lnedkalfti\newline%
+vvlgtdkvlq qvveqlnklv \newline%
+nvikvedlsk ephverelml \newline%
+iklnadpstr seimwlvdif\newline%
+rakivdtseq sltievtgdp \newline%
+gkmvalttnl ekfgikeiar \newline%
+tgkialrrek mgetapfwrf\newline%
+saasyphlvk esshetvaek \newline%
+tklaltgngn assggdvypv \newline%
+epyndfkpvl dahwgmvyde\newline%
+dssglrshtl sllvanvpgv \newline%
+lnlitgaisr rgyniqslav \newline%
+gpaekeglsr ittvipgtde\newline%
+nidklvrqlq klidlqeiqn \newline%
+ithmpfaere lmlikvaadt \newline%
+sarrdvldia qvfrakaidv\newline%
+sdhtitlevt gdlrkmsalq \newline%
+tqleaygice vartgrvalv \newline%
+resgvdstyl rgyslpl\newline%
+\\%
+\hline%
+type&variant\\%
+\hline%
+unit&mg/mL\\%
+\hline%
+variant&EcPDC\_C{-}His\\%
+\hline%
+\end{tabular}
+
+%
+\subsection{Educts}%
+\label{subsec:Educts}%
+\begin{tabular}{|c|c|}%
+\hline%
+concentration&1\\%
+\hline%
+formula&C3H4O3\\%
+\hline%
+id&33\\%
+\hline%
+imageUrl&https://www.ebi.ac.uk/chebi/displayImage.do?defaultImage=true\&imageIndex=0\&chebiId=32816\\%
+\hline%
+name&Pyruvate\\%
+\hline%
+purity&98\%\\%
+\hline%
+role&substrate\\%
+\hline%
+smiles&CC(=O)C(O)=O\\%
+\hline%
+supplier&sigma{-}aldrich\\%
+\hline%
+unit&mmoL/L\\%
+\hline%
+concentration&1\\%
+\hline%
+formula&C2H4O\\%
+\hline%
+id&1292\\%
+\hline%
+imageUrl&https://www.ebi.ac.uk/chebi/displayImage.do?defaultImage=true\&imageIndex=0\&chebiId=15343\\%
+\hline%
+name&Acetaldehyde\\%
+\hline%
+purity&0\\%
+\hline%
+role&product\\%
+\hline%
+smiles&CC=O\\%
+\hline%
+supplier&0\\%
+\hline%
+unit&mmoL/L\\%
+\hline%
+concentration&0.5\\%
+\hline%
+formula&CO2\\%
+\hline%
+id&1266\\%
+\hline%
+imageUrl&https://www.ebi.ac.uk/chebi/displayImage.do?defaultImage=true\&imageIndex=0\&chebiId=139538\\%
+\hline%
+name&CO2\\%
+\hline%
+purity&0\\%
+\hline%
+role&product\\%
+\hline%
+smiles&O=C=O\\%
+\hline%
+supplier&0\\%
+\hline%
+unit&mmoL/L\\%
+\hline%
+\end{tabular}
+
+%
+\subsection{Products}%
+\label{subsec:Products}%
+\begin{tabular}{|c|c|}%
 \hline%
 \end{tabular}
 

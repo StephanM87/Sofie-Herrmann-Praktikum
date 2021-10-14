@@ -1,6 +1,6 @@
 import pylatex.config as cf
 from pylatex import Document, Tabular, Section, Subsection, NoEscape, Command
-from BioCatHubDatenmodell import DataModel
+from Old.BioCatHubDatenmodell import DataModel
 from dict_entries import user_dict_entries, vessel_dict_entries, condition_dict_entries, buffer_dict_entries, enzymes_dict_entries, educts_dict_entries
 
 
@@ -82,7 +82,9 @@ class PdfLibrary (Document):
         
         with doc.create(Subsection("Educts")):
             with doc.create(Tabular("|c|c|")) as table4_1:
-                educts = i["reaction"]["educts"]
+                enzyme_container = i
+                educts = enzyme_container["reaction"]["educts"]
+                print("Die Enzymes sind vor verfickte Drecksfunktion:", i)
                 table4_1.add_hline()
                 def verfickte_drecks_funktion(dict):
                     for i in dict:
@@ -92,10 +94,11 @@ class PdfLibrary (Document):
                 for i in educts:
                     verfickte_drecks_funktion(i)
 
-        '''with doc.create(Subsection("Products")):
+        with doc.create(Subsection("Products")):
             with doc.create(Tabular("|c|c|")) as table4_2:
-                products = i["reaction"]["products"]
+                products = enzyme_container["reaction"]["products"]
                 table4_2.add_hline()
+                print("Die Enzymes sind vor verfickte Drecksfunktion2:", i)
                 def verfickte_drecks_funktion2(dict):
                     for i in dict:
                         table4_1.add_row([i, dict[i]])
@@ -103,7 +106,7 @@ class PdfLibrary (Document):
                         print(i)
  
                 for i in products:
-                    verfickte_drecks_funktion2(i)'''
+                    verfickte_drecks_funktion2(i)
 
         doc.generate_pdf("biocathub_pdf_test",
                          compiler="pdflatex", clean_tex=False)

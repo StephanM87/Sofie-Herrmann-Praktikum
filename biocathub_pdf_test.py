@@ -1,5 +1,5 @@
 import pylatex.config as cf
-from pylatex import Document, Tabular, Section, Subsection, NoEscape, Command
+from pylatex import Document, Tabular, Section, Subsection, NoEscape, Command, MultiRow
 from Old.BioCatHubDatenmodell import DataModel
 from dict_entries import user_dict_entries, vessel_dict_entries, condition_dict_entries, buffer_dict_entries, enzymes_dict_entries, educts_dict_entries
 
@@ -39,7 +39,7 @@ class PdfLibrary (Document):
                     table2.add_hline()
                 def add_others(dict):
                     for i in dict:
-                        table2.add_row([i, [dict[i]]])
+                        table2.add_row(["Other", [dict[i]]])
                         table2.add_hline()
 
                 for i in vessel["others"]:
@@ -54,11 +54,13 @@ class PdfLibrary (Document):
                     table3.add_hline()
                 def kack_funktion(dict):
                     for i in dict:
-                        table3.add_row([i, dict[i]])
-                        table3.add_hline()
+                        table3.add_row((MultiRow(1, data = "Other"), dict[i]))
+                        table3.add_row("", "")
+                        table3.add_hline(2)
 
                 for i in condition["others"]:
                     kack_funktion(i)
+                    table3.add_hline()
 
         with doc.create(Subsection("Buffer")):
                     with doc.create(Tabular("|c|c|")) as table3_1:
@@ -84,7 +86,6 @@ class PdfLibrary (Document):
             with doc.create(Tabular("|c|c|")) as table4_1:
                 enzyme_container = i
                 educts = enzyme_container["reaction"]["educts"]
-                print("Die Enzymes sind vor verfickte Drecksfunktion:", i)
                 table4_1.add_hline()
                 def verfickte_drecks_funktion(dict):
                     for i in dict:
@@ -98,15 +99,22 @@ class PdfLibrary (Document):
             with doc.create(Tabular("|c|c|")) as table4_2:
                 products = enzyme_container["reaction"]["products"]
                 table4_2.add_hline()
-                print("Die Enzymes sind vor verfickte Drecksfunktion2:", i)
                 def verfickte_drecks_funktion2(dict):
                     for i in dict:
-                        table4_1.add_row([i, dict[i]])
-                        table4_1.add_hline()
-                        print(i)
+                        table4_2.add_row([i, dict[i]])
+                        table4_2.add_hline()
+                        #print(dict[i])
  
                 for i in products:
                     verfickte_drecks_funktion2(i)
+
+        with doc.create(Subsection("Value")):
+            cf.active = cf.Version1()
+            def please_work(dict):
+                    doc.append(dict["reaction"]["value"])
+            
+            for i in self.biocathub_model["enzymes"]:
+                please_work(i)
 
         doc.generate_pdf("biocathub_pdf_test",
                          compiler="pdflatex", clean_tex=False)
